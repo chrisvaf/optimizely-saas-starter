@@ -87,6 +87,13 @@ export const HeroDataFragmentDoc = gql`
   }
 }
     `;
+export const SimpleHeroDataFragmentDoc = gql`
+    fragment SimpleHeroData on SimpleHero {
+  Image {
+    ...ReferenceData
+  }
+}
+    `;
 export const TextComponentDataFragmentDoc = gql`
     fragment TextComponentData on TextComponent {
   Text
@@ -98,6 +105,7 @@ export const CompositionComponentNodeDataFragmentDoc = gql`
     ...BlockData
     ...ElementData
     ...HeroData
+    ...SimpleHeroData
     ...TextComponentData
   }
 }
@@ -211,6 +219,7 @@ export const getContentByIdDocument = gql`
       ...BlockData
       ...PageData
       ...HeroData
+      ...SimpleHeroData
       ...TextComponentData
       ...BlankExperienceData
     }
@@ -223,6 +232,7 @@ ${BlockDataFragmentDoc}
 ${PageDataFragmentDoc}
 ${HeroDataFragmentDoc}
 ${ReferenceDataFragmentDoc}
+${SimpleHeroDataFragmentDoc}
 ${TextComponentDataFragmentDoc}
 ${BlankExperienceDataFragmentDoc}
 ${ExperienceDataFragmentDoc}
@@ -257,6 +267,7 @@ ${ElementDataFragmentDoc}
 ${IElementDataFragmentDoc}
 ${HeroDataFragmentDoc}
 ${ReferenceDataFragmentDoc}
+${SimpleHeroDataFragmentDoc}
 ${TextComponentDataFragmentDoc}`;
 export const getContentTypeDocument = gql`
     query getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String) {

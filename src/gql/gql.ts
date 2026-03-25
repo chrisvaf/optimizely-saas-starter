@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}": typeof types.HeroDataFragmentDoc,
+    "fragment SimpleHeroData on SimpleHero {\n  Image {\n    ...ReferenceData\n  }\n}": typeof types.SimpleHeroDataFragmentDoc,
     "fragment TextComponentData on TextComponent {\n  Text\n}": typeof types.TextComponentDataFragmentDoc,
     "fragment BlankExperienceData on BlankExperience {\n  ...ExperienceData\n  empty: _metadata {\n    key\n  }\n}": typeof types.BlankExperienceDataFragmentDoc,
     "fragment SysContentFolderData on SysContentFolder {\n  empty: _metadata {\n    key\n  }\n}": typeof types.SysContentFolderDataFragmentDoc,
@@ -27,6 +28,7 @@ type Documents = {
 };
 const documents: Documents = {
     "fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}": types.HeroDataFragmentDoc,
+    "fragment SimpleHeroData on SimpleHero {\n  Image {\n    ...ReferenceData\n  }\n}": types.SimpleHeroDataFragmentDoc,
     "fragment TextComponentData on TextComponent {\n  Text\n}": types.TextComponentDataFragmentDoc,
     "fragment BlankExperienceData on BlankExperience {\n  ...ExperienceData\n  empty: _metadata {\n    key\n  }\n}": types.BlankExperienceDataFragmentDoc,
     "fragment SysContentFolderData on SysContentFolder {\n  empty: _metadata {\n    key\n  }\n}": types.SysContentFolderDataFragmentDoc,
@@ -56,6 +58,10 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}"): (typeof documents)["fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "fragment SimpleHeroData on SimpleHero {\n  Image {\n    ...ReferenceData\n  }\n}"): (typeof documents)["fragment SimpleHeroData on SimpleHero {\n  Image {\n    ...ReferenceData\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
