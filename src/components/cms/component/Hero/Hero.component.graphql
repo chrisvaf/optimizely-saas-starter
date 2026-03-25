@@ -1,0 +1,8 @@
+fragment HeroData on Hero {
+  Video { ...ReferenceData }
+  Image { ...ReferenceData }
+  Heading
+  SubHeading
+  Body { json, html }
+  Links { __typename }
+}

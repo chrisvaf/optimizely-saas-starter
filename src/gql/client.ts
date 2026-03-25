@@ -2,8 +2,142 @@ import type * as Schema from "./graphql";
 import type { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
+export const CompositionNodeDataFragmentDoc = gql`
+    fragment CompositionNodeData on ICompositionNode {
+  name: displayName
+  layoutType: nodeType
+  type
+  key
+  template: displayTemplateKey
+  settings: displaySettings {
+    key
+    value
+  }
+}
+    `;
+export const LinkDataFragmentDoc = gql`
+    fragment LinkData on ContentUrl {
+  type
+  base
+  default
+}
+    `;
+export const IContentInfoFragmentDoc = gql`
+    fragment IContentInfo on IContentMetadata {
+  key
+  locale
+  types
+  displayName
+  version
+  url {
+    ...LinkData
+  }
+}
+    `;
+export const IContentDataFragmentDoc = gql`
+    fragment IContentData on _IContent {
+  _metadata {
+    ...IContentInfo
+  }
+  _type: __typename
+}
+    `;
+export const BlockDataFragmentDoc = gql`
+    fragment BlockData on _IComponent {
+  ...IContentData
+}
+    `;
+export const IElementDataFragmentDoc = gql`
+    fragment IElementData on _IComponent {
+  _metadata {
+    ...IContentInfo
+  }
+  _type: __typename
+}
+    `;
+export const ElementDataFragmentDoc = gql`
+    fragment ElementData on _IComponent {
+  ...IElementData
+}
+    `;
+export const ReferenceDataFragmentDoc = gql`
+    fragment ReferenceData on ContentReference {
+  key
+  url {
+    ...LinkData
+  }
+}
+    `;
+export const HeroDataFragmentDoc = gql`
+    fragment HeroData on Hero {
+  Video {
+    ...ReferenceData
+  }
+  Image {
+    ...ReferenceData
+  }
+  Heading
+  SubHeading
+  Body {
+    json
+    html
+  }
+  Links {
+    __typename
+  }
+}
+    `;
+export const TextComponentDataFragmentDoc = gql`
+    fragment TextComponentData on TextComponent {
+  Text
+}
+    `;
+export const CompositionComponentNodeDataFragmentDoc = gql`
+    fragment CompositionComponentNodeData on ICompositionComponentNode {
+  component {
+    ...BlockData
+    ...ElementData
+    ...HeroData
+    ...TextComponentData
+  }
+}
+    `;
+export const ExperienceDataFragmentDoc = gql`
+    fragment ExperienceData on _IExperience {
+  composition {
+    ...CompositionNodeData
+    nodes {
+      ...CompositionNodeData
+      ... on ICompositionStructureNode {
+        nodes {
+          ...CompositionNodeData
+          ... on ICompositionStructureNode {
+            nodes {
+              ...CompositionNodeData
+              ... on ICompositionStructureNode {
+                nodes {
+                  ...CompositionNodeData
+                  ...CompositionComponentNodeData
+                  ... on ICompositionStructureNode {
+                    nodes {
+                      ...CompositionNodeData
+                      ...CompositionComponentNodeData
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      ...CompositionComponentNodeData
+    }
+  }
+}
+    `;
 export const BlankExperienceDataFragmentDoc = gql`
     fragment BlankExperienceData on BlankExperience {
+  ...ExperienceData
   empty: _metadata {
     key
   }
@@ -44,33 +178,6 @@ export const VideoMediaDataFragmentDoc = gql`
   }
 }
     `;
-export const LinkDataFragmentDoc = gql`
-    fragment LinkData on ContentUrl {
-  type
-  base
-  default
-}
-    `;
-export const IContentInfoFragmentDoc = gql`
-    fragment IContentInfo on IContentMetadata {
-  key
-  locale
-  types
-  displayName
-  version
-  url {
-    ...LinkData
-  }
-}
-    `;
-export const IContentDataFragmentDoc = gql`
-    fragment IContentData on _IContent {
-  _metadata {
-    ...IContentInfo
-  }
-  _type: __typename
-}
-    `;
 export const PageDataFragmentDoc = gql`
     fragment PageData on _IContent {
   ...IContentData
@@ -81,75 +188,13 @@ export const IContentListItemFragmentDoc = gql`
   ...IContentData
 }
     `;
-export const CompositionNodeDataFragmentDoc = gql`
-    fragment CompositionNodeData on ICompositionNode {
-  name: displayName
-  layoutType: nodeType
-  type
-  key
-  template: displayTemplateKey
-  settings: displaySettings {
-    key
-    value
-  }
-}
-    `;
-export const BlockDataFragmentDoc = gql`
-    fragment BlockData on _IComponent {
-  ...IContentData
-}
-    `;
-export const IElementDataFragmentDoc = gql`
-    fragment IElementData on _IComponent {
-  _metadata {
-    ...IContentInfo
-  }
-  _type: __typename
-}
-    `;
-export const ElementDataFragmentDoc = gql`
-    fragment ElementData on _IComponent {
-  ...IElementData
-}
-    `;
-export const CompositionComponentNodeDataFragmentDoc = gql`
-    fragment CompositionComponentNodeData on ICompositionComponentNode {
-  component {
-    ...BlockData
-    ...ElementData
-  }
-}
-    `;
-export const ExperienceDataFragmentDoc = gql`
-    fragment ExperienceData on _IExperience {
-  composition {
-    ...CompositionNodeData
-    nodes {
-      ...CompositionNodeData
-      ... on ICompositionStructureNode {
-        nodes {
-          ...CompositionNodeData
-          ... on ICompositionStructureNode {
-            nodes {
-              ...CompositionNodeData
-              ... on ICompositionStructureNode {
-                nodes {
-                  ...CompositionNodeData
-                  ...CompositionComponentNodeData
-                  ... on ICompositionStructureNode {
-                    nodes {
-                      ...CompositionNodeData
-                      ...CompositionComponentNodeData
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      ...CompositionComponentNodeData
-    }
+export const LinkItemDataFragmentDoc = gql`
+    fragment LinkItemData on Link {
+  title
+  text
+  target
+  url {
+    ...LinkData
   }
 }
     `;
@@ -165,6 +210,8 @@ export const getContentByIdDocument = gql`
       ...IContentData
       ...BlockData
       ...PageData
+      ...HeroData
+      ...TextComponentData
       ...BlankExperienceData
     }
   }
@@ -174,7 +221,15 @@ ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
 ${BlockDataFragmentDoc}
 ${PageDataFragmentDoc}
-${BlankExperienceDataFragmentDoc}`;
+${HeroDataFragmentDoc}
+${ReferenceDataFragmentDoc}
+${TextComponentDataFragmentDoc}
+${BlankExperienceDataFragmentDoc}
+${ExperienceDataFragmentDoc}
+${CompositionNodeDataFragmentDoc}
+${CompositionComponentNodeDataFragmentDoc}
+${ElementDataFragmentDoc}
+${IElementDataFragmentDoc}`;
 export const getContentByPathDocument = gql`
     query getContentByPath($path: [String!]!, $locale: [Locales!], $siteId: String, $changeset: String = null) {
   content: _Content(
@@ -193,7 +248,16 @@ export const getContentByPathDocument = gql`
 ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
 ${PageDataFragmentDoc}
-${BlankExperienceDataFragmentDoc}`;
+${BlankExperienceDataFragmentDoc}
+${ExperienceDataFragmentDoc}
+${CompositionNodeDataFragmentDoc}
+${CompositionComponentNodeDataFragmentDoc}
+${BlockDataFragmentDoc}
+${ElementDataFragmentDoc}
+${IElementDataFragmentDoc}
+${HeroDataFragmentDoc}
+${ReferenceDataFragmentDoc}
+${TextComponentDataFragmentDoc}`;
 export const getContentTypeDocument = gql`
     query getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String) {
   content: _Content(

@@ -1,3 +1,4 @@
 fragment BlankExperienceData on BlankExperience {
+  ...ExperienceData
   empty: _metadata { key }
 }

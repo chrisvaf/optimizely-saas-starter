@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "propertyName": "Video",
+    "propertyType": "contentReference"
+  },
+  {
+    "propertyName": "Image",
+    "propertyType": "contentReference"
+  },
+  {
+    "propertyName": "Heading",
+    "propertyType": "string"
+  },
+  {
+    "propertyName": "SubHeading",
+    "propertyType": "string"
+  },
+  {
+    "propertyName": "Body",
+    "propertyType": "richText"
+  },
+  {
+    "propertyName": "Links",
+    "propertyType": "link"
+  }
+]

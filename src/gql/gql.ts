@@ -14,7 +14,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "fragment BlankExperienceData on BlankExperience {\n  empty: _metadata {\n    key\n  }\n}": typeof types.BlankExperienceDataFragmentDoc,
+    "fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}": typeof types.HeroDataFragmentDoc,
+    "fragment TextComponentData on TextComponent {\n  Text\n}": typeof types.TextComponentDataFragmentDoc,
+    "fragment BlankExperienceData on BlankExperience {\n  ...ExperienceData\n  empty: _metadata {\n    key\n  }\n}": typeof types.BlankExperienceDataFragmentDoc,
     "fragment SysContentFolderData on SysContentFolder {\n  empty: _metadata {\n    key\n  }\n}": typeof types.SysContentFolderDataFragmentDoc,
     "fragment ImageMediaData on ImageMedia {\n  empty: _metadata {\n    key\n  }\n}": typeof types.ImageMediaDataFragmentDoc,
     "fragment GenericMediaData on GenericMedia {\n  empty: _metadata {\n    key\n  }\n}": typeof types.GenericMediaDataFragmentDoc,
@@ -24,7 +26,9 @@ type Documents = {
     "query getContentById($key: String!, $version: String, $locale: [Locales!], $path: String = \"-\", $domain: String, $changeset: String) {\n      content: _Content(\n        variation: { include: ALL }\n        where: {\n          _or: [\n            { _metadata: { key: { eq: $key }, version: { eq: $version } } }\n            {\n              _metadata: {\n                url: { default: { eq: $path }, base: { eq: $domain } }\n                version: { eq: $version }\n              }\n            }\n          ]\n          _metadata: { changeset: { eq: $changeset } }\n        }\n        locale: $locale\n      ) {\n        total\n        items: item {\n          ...IContentData\n          ...BlockData\n          ...PageData\n        }\n      }\n    }\n\nquery getContentByPath($path: [String!]!, $locale: [Locales!], $siteId: String, $changeset: String = null) {\n      content: _Content(\n        where: {\n          _metadata: {\n            url: { default: { in: $path }, base: { eq: $siteId } }\n            changeset: { eq: $changeset }\n          }\n        }\n        locale: $locale\n      ) {\n        total\n        items: item {\n          ...IContentData\n          ...PageData\n        }\n      }\n    }\n\nquery getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = \"-\", $domain: String) {\n        content: _Content(\n            variation: { include: ALL }\n            where: {\n                _or: [\n                    { _metadata: { key: { eq: $key }, version: { eq: $version } } }\n                    { _metadata: { url: { hierarchical: { eq: $path }, base: { eq: $domain } }, version: { eq: $version } } }\n                ]\n            }\n            locale: $locale\n        ) {\n            total\n            items: item {\n                _metadata {\n                    types\n                }\n            }\n        }\n    }": typeof types.getContentByIdDocument,
 };
 const documents: Documents = {
-    "fragment BlankExperienceData on BlankExperience {\n  empty: _metadata {\n    key\n  }\n}": types.BlankExperienceDataFragmentDoc,
+    "fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}": types.HeroDataFragmentDoc,
+    "fragment TextComponentData on TextComponent {\n  Text\n}": types.TextComponentDataFragmentDoc,
+    "fragment BlankExperienceData on BlankExperience {\n  ...ExperienceData\n  empty: _metadata {\n    key\n  }\n}": types.BlankExperienceDataFragmentDoc,
     "fragment SysContentFolderData on SysContentFolder {\n  empty: _metadata {\n    key\n  }\n}": types.SysContentFolderDataFragmentDoc,
     "fragment ImageMediaData on ImageMedia {\n  empty: _metadata {\n    key\n  }\n}": types.ImageMediaDataFragmentDoc,
     "fragment GenericMediaData on GenericMedia {\n  empty: _metadata {\n    key\n  }\n}": types.GenericMediaDataFragmentDoc,
@@ -51,7 +55,15 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "fragment BlankExperienceData on BlankExperience {\n  empty: _metadata {\n    key\n  }\n}"): (typeof documents)["fragment BlankExperienceData on BlankExperience {\n  empty: _metadata {\n    key\n  }\n}"];
+export function gql(source: "fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}"): (typeof documents)["fragment HeroData on Hero {\n  Video {\n    ...ReferenceData\n  }\n  Image {\n    ...ReferenceData\n  }\n  Heading\n  SubHeading\n  Body {\n    json\n    html\n  }\n  Links {\n    __typename\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "fragment TextComponentData on TextComponent {\n  Text\n}"): (typeof documents)["fragment TextComponentData on TextComponent {\n  Text\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "fragment BlankExperienceData on BlankExperience {\n  ...ExperienceData\n  empty: _metadata {\n    key\n  }\n}"): (typeof documents)["fragment BlankExperienceData on BlankExperience {\n  ...ExperienceData\n  empty: _metadata {\n    key\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
