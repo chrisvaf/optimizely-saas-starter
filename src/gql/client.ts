@@ -2,6 +2,48 @@ import type * as Schema from "./graphql";
 import type { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
+export const BlankExperienceDataFragmentDoc = gql`
+    fragment BlankExperienceData on BlankExperience {
+  empty: _metadata {
+    key
+  }
+}
+    `;
+export const SysContentFolderDataFragmentDoc = gql`
+    fragment SysContentFolderData on SysContentFolder {
+  empty: _metadata {
+    key
+  }
+}
+    `;
+export const ImageMediaDataFragmentDoc = gql`
+    fragment ImageMediaData on ImageMedia {
+  empty: _metadata {
+    key
+  }
+}
+    `;
+export const GenericMediaDataFragmentDoc = gql`
+    fragment GenericMediaData on GenericMedia {
+  empty: _metadata {
+    key
+  }
+}
+    `;
+export const BlankSectionDataFragmentDoc = gql`
+    fragment BlankSectionData on BlankSection {
+  empty: _metadata {
+    key
+  }
+}
+    `;
+export const VideoMediaDataFragmentDoc = gql`
+    fragment VideoMediaData on VideoMedia {
+  empty: _metadata {
+    key
+  }
+}
+    `;
 export const LinkDataFragmentDoc = gql`
     fragment LinkData on ContentUrl {
   type
@@ -32,14 +74,6 @@ export const IContentDataFragmentDoc = gql`
 export const PageDataFragmentDoc = gql`
     fragment PageData on _IContent {
   ...IContentData
-}
-    `;
-export const ReferenceDataFragmentDoc = gql`
-    fragment ReferenceData on ContentReference {
-  key
-  url {
-    ...LinkData
-  }
 }
     `;
 export const IContentListItemFragmentDoc = gql`
@@ -119,16 +153,6 @@ export const ExperienceDataFragmentDoc = gql`
   }
 }
     `;
-export const LinkItemDataFragmentDoc = gql`
-    fragment LinkItemData on Link {
-  title
-  text
-  target
-  url {
-    ...LinkData
-  }
-}
-    `;
 export const getContentByIdDocument = gql`
     query getContentById($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String, $changeset: String) {
   content: _Content(
@@ -141,6 +165,7 @@ export const getContentByIdDocument = gql`
       ...IContentData
       ...BlockData
       ...PageData
+      ...BlankExperienceData
     }
   }
 }
@@ -148,7 +173,8 @@ export const getContentByIdDocument = gql`
 ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
 ${BlockDataFragmentDoc}
-${PageDataFragmentDoc}`;
+${PageDataFragmentDoc}
+${BlankExperienceDataFragmentDoc}`;
 export const getContentByPathDocument = gql`
     query getContentByPath($path: [String!]!, $locale: [Locales!], $siteId: String, $changeset: String = null) {
   content: _Content(
@@ -159,13 +185,15 @@ export const getContentByPathDocument = gql`
     items: item {
       ...IContentData
       ...PageData
+      ...BlankExperienceData
     }
   }
 }
     ${IContentDataFragmentDoc}
 ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
-${PageDataFragmentDoc}`;
+${PageDataFragmentDoc}
+${BlankExperienceDataFragmentDoc}`;
 export const getContentTypeDocument = gql`
     query getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String) {
   content: _Content(
