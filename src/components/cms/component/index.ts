@@ -3,6 +3,7 @@
 import { type ComponentTypeDictionary } from '@remkoj/optimizely-cms-react';
 
 import HeroComponent from './Hero';
+import SimpleHeroComponent from './SimpleHero';
 import TextComponentComponent from './TextComponent';
 
 // Build dictionary
@@ -10,6 +11,10 @@ export const ComponentFactory : ComponentTypeDictionary = [
   {
     type: 'Hero',
     component: HeroComponent
+  },
+  {
+    type: 'SimpleHero',
+    component: SimpleHeroComponent
   },
   {
     type: 'TextComponent',

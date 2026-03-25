@@ -1,0 +1,3 @@
+fragment SimpleHeroData on SimpleHero {
+  Image { ...ReferenceData }
+}

@@ -1,0 +1,28 @@
+{
+  "key": "SimpleHero",
+  "displayName": "Simple Hero",
+  "description": "",
+  "baseType": "_component",
+  "isContract": false,
+  "sortOrder": 0,
+  "mayContainTypes": [],
+  "mediaFileExtensions": [],
+  "compositionBehaviors": [
+    "sectionEnabled",
+    "elementEnabled"
+  ],
+  "contracts": [],
+  "properties": {
+    "Image": {
+      "type": "contentReference",
+      "displayName": "Image",
+      "description": "",
+      "localized": false,
+      "required": false,
+      "group": "Information",
+      "sortOrder": 0,
+      "allowedTypes": [],
+      "restrictedTypes": []
+    }
+  }
+}
