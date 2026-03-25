@@ -60,53 +60,11 @@ export const ElementDataFragmentDoc = gql`
   ...IElementData
 }
     `;
-export const ReferenceDataFragmentDoc = gql`
-    fragment ReferenceData on ContentReference {
-  key
-  url {
-    ...LinkData
-  }
-}
-    `;
-export const HeroDataFragmentDoc = gql`
-    fragment HeroData on Hero {
-  Video {
-    ...ReferenceData
-  }
-  Image {
-    ...ReferenceData
-  }
-  Heading
-  SubHeading
-  Body {
-    json
-    html
-  }
-  Links {
-    __typename
-  }
-}
-    `;
-export const SimpleHeroDataFragmentDoc = gql`
-    fragment SimpleHeroData on SimpleHero {
-  Image {
-    ...ReferenceData
-  }
-}
-    `;
-export const TextComponentDataFragmentDoc = gql`
-    fragment TextComponentData on TextComponent {
-  Text
-}
-    `;
 export const CompositionComponentNodeDataFragmentDoc = gql`
     fragment CompositionComponentNodeData on ICompositionComponentNode {
   component {
     ...BlockData
     ...ElementData
-    ...HeroData
-    ...SimpleHeroData
-    ...TextComponentData
   }
 }
     `;
@@ -196,16 +154,6 @@ export const IContentListItemFragmentDoc = gql`
   ...IContentData
 }
     `;
-export const LinkItemDataFragmentDoc = gql`
-    fragment LinkItemData on Link {
-  title
-  text
-  target
-  url {
-    ...LinkData
-  }
-}
-    `;
 export const getContentByIdDocument = gql`
     query getContentById($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String, $changeset: String) {
   content: _Content(
@@ -218,9 +166,6 @@ export const getContentByIdDocument = gql`
       ...IContentData
       ...BlockData
       ...PageData
-      ...HeroData
-      ...SimpleHeroData
-      ...TextComponentData
       ...BlankExperienceData
     }
   }
@@ -230,10 +175,6 @@ ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
 ${BlockDataFragmentDoc}
 ${PageDataFragmentDoc}
-${HeroDataFragmentDoc}
-${ReferenceDataFragmentDoc}
-${SimpleHeroDataFragmentDoc}
-${TextComponentDataFragmentDoc}
 ${BlankExperienceDataFragmentDoc}
 ${ExperienceDataFragmentDoc}
 ${CompositionNodeDataFragmentDoc}
@@ -264,11 +205,7 @@ ${CompositionNodeDataFragmentDoc}
 ${CompositionComponentNodeDataFragmentDoc}
 ${BlockDataFragmentDoc}
 ${ElementDataFragmentDoc}
-${IElementDataFragmentDoc}
-${HeroDataFragmentDoc}
-${ReferenceDataFragmentDoc}
-${SimpleHeroDataFragmentDoc}
-${TextComponentDataFragmentDoc}`;
+${IElementDataFragmentDoc}`;
 export const getContentTypeDocument = gql`
     query getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String) {
   content: _Content(
